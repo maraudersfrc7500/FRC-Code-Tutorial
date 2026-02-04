@@ -1,0 +1,21 @@
+.head {
+    background-color: #3a405a;
+    height: 50px;
+}
+.nav {
+    width: 15vw;
+    position: fixed;
+    /* border-style: solid; */
+    padding-left: 50px;
+    margin-top: 50px;
+    height: 85vh;
+    overflow-y: auto;
+}
+.nav a {
+    color: black;
+    text-decoration: none;
+}
+.nav a:hover {
+    color: #D29234;
+    transition: 0.2s;
+}
