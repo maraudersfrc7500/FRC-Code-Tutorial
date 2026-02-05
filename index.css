@@ -9,6 +9,7 @@ body {
     /* border-style: solid; */
     width: 60vw;
     margin: auto;
+    margin-top: 12vh;
 }
 .body h1 {
     font-size: 64px;

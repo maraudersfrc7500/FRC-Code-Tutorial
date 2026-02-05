@@ -12,25 +12,69 @@
     <div class="nav">
         <h2><a href="index.html">Welcome</a></h2>
         <h2><a href="gettingstarted.html">Getting Started</a></h2>
-        <h2>Beginner</h2>
-        <p>Motors</p>
-        <p>Gamepads</p>
+        <h2><a href="beginner.html">Beginner</a></h2>
+        <p><a href="motors.html">Motors</a></p>
+        <p><a href="controllers.html">Controllers</a></p>
         <p>Telemetry</p>
-        <p>Beginner Wrap-Up</p>
+        <p>Putting It All Together (Beginner)</p>
         <h2>Intermediate</h2>
-        <p>Intermediate Wrap-Up</p>
+        <p>Putting It All Together (Intermediate)</p>
         <h2>Advanced</h2>
         <p>Command-Based Programming</p>
         <p>Odometry</p>
         <p>Vision</p>
         <p>Path Planning</p>
-        <p>Complete Wrap-Up</p>
+        <p>Putting It All Together (Advanced)</p>
+        <h2>Wrap Up</h2>
     </div>
     <div class="body">
         <h1>Motors</h1>
         <p>As I said earlier, this is based on the hardware from Rev Robotics, and will be using stuff as such.</p>
         <h2>SparkMax</h2>
-        <p>The SparkMax is a motor controller from Rev Robotics which connects to a motor. The SparkMax object is constructed with an id, which must be set up in the Rev Hardware Client. An example Robot.java file looks like this: </p>
+        <p>The SparkMax is a motor controller from Rev Robotics which connects to a motor. The SparkMax object is constructed with an id, which must be set up in the Rev Hardware Client. The import for the SparkMax class, which should be placed with the other imports in the Robot.java file, is as follows: </p>
+        <pre>
+            <code>
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+            </code></pre>
+        <p>Once you have the import placed in your file, you are ready to start creating motors. To create a SparkMax object, we need to create the object in the class and then initialize the object inside of the constructor. Your Robot.java file should look as follows (with some methods also): </p>
+        <pre>
+            <code>
+package frc.robot;
+
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.TimedRobot;
+
+public class Robot extends TimedRobot {
+  private SparkMax motor;
+
+  public Robot() {
+    motor = new SparkMax(0,MotorType.kBrushless); 
+    //0 is the ID of the SparkMax motor controller, set in the Rev Hardware Client
+    //MotorType.kBrushless is the type of motor it is,
+    //which can usually be found on the page where the motor was purchased
+  }
+}
+            </code>
+        </pre>
+        <h2>Methods of SparkMax</h2>
+        <p>Now that we know how to create and initialize out SparkMax motor controller, it's time to learn how to make it move. The main way of making a motor move is by setting the power of the SparkMax via the <code>set()</code> method: </p>
+        <pre>
+            <code>
+motor.set(0.8) //0.8 is the speed percentage (80%) the motor is set to
+            </code></pre>
+        <p>If you find your motor spinning the wrong direction, you can either slap a big 'ol negative on the power (effective but inadvisable), or you can set the motor to be inverted (advisable) using the <code>setInverted()</code> method: </p>
+        <pre>
+            <code>
+motor.setInverted(true);
+            </code></pre>
+        <p>Finally, in order to stop your motor, you can either set the motor speed to zero using <code>motor.set(0)</code> (again, effective but inadvisable), or you can stop the motor (advisable) using the <code>stopMotor()</code> method: </p>
+        <pre>
+            <code>
+motor.stopMotor();
+            </code></pre>
     </div>
 </body>
 </html>

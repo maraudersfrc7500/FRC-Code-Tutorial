@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="nav.css">
+    <title>Getting Started | FRC Tutorial</title>
+</head>
+<body>
+    <div class="head"></div>
+    <div class="nav">
+        <h2><a href="index.html">Welcome</a></h2>
+        <h2><a href="gettingstarted.html">Getting Started</a></h2>
+        <h2><a href="beginner.html">Beginner</a></h2>
+        <p><a href="motors.html">Motors</a></p>
+        <p><a href="controllers.html">Controllers</a></p>
+        <p>Telemetry</p>
+        <p>Putting It All Together (Beginner)</p>
+        <h2>Intermediate</h2>
+        <p>Putting It All Together (Intermediate)</p>
+        <h2>Advanced</h2>
+        <p>Command-Based Programming</p>
+        <p>Odometry</p>
+        <p>Vision</p>
+        <p>Path Planning</p>
+        <p>Putting It All Together (Advanced)</p>
+        <h2>Wrap Up</h2>
+    </div>
+    <div class="body">
+        <h1>Controllers</h1>
+        <p>WPILib supports various controllers, including Xbox controllers, PS4 controllers, general joysticks, and even racing wheels, pedals, and gear shifts. For this tutorial, we'll just be going over Xbox and PS4 controllers. Just like for the SparkMax motor controllers, make sure you have the appropriate import.</p>
+        <h2>Xbox Controllers</h2>
+        <p>Imports: </p>
+        <pre>
+            <code>
+import edu.wpi.first.wpilibj.XboxController;
+            </code></pre>
+        <p>Once again, just like the SparkMax motor controllers, we have to create the XboxController object in our Robot.java class and initialize it in the Robot constructor: </p>
+        <pre>
+            <code>
+package frc.robot;
+
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
+
+public class Robot extends TimedRobot {
+  private SparkMax motor;
+  private XboxController controller;
+
+  public Robot() {
+    motor = new SparkMax(0,MotorType.kBrushless);
+    controller = new XboxController(0); //0 is the port of the driver station
+                                        //that the controller is plugged into
+  }
+}
+            </code></pre>
+        <h2>Methods of XboxController</h2>
+        <p>The XboxController class has various functions to read button inputs on the controller. For example, each button has a getButton, getButtonPressed, and getButtonReleased method. Typically you would place these in your Robot.java <code>teleopPeriodic()</code> method to make a motor move or stop, as followed: </p>
+        <pre>
+        <code>
+  @Override
+  public void teleopPeriodic() {
+    if (controller.getAButton()) { //While button A is pressed on the controller,
+      motor.set(0.8);              //the motor will spin at 80% speed
+    }
+    if (controller.getYButtonPressed()) { //When the button Y is pressed,
+        motor.set(0.5);                   //the motor will spin at 50% speed
+    }
+    if (controller.getYButtonReleased()) { //When the button Y is released,
+        motor.stopMotor();                 //the motor will stop spinning
+    }
+  }
+            </code></pre>
+        <p>The triggers and joysticks are measured as analog inputs rather than booleans. Therefore, you'd usually set them equal to some double value, like so: </p>
+        <pre>
+            <code>
+  @Override
+  public void teleopPeriodic() {
+    double leftY = controller.getLeftY(); //range of [-1,1]; back is positive
+    motor.set(leftY);
+    double leftTrigger = controller.getLeftTriggerAxis(); //range of [0,1]
+    motor.set(leftTrigger);
+  }
+            </code></pre>
+        <h2>PS4 Controllers</h2>
+        <p>Imports: </p>
+        <pre>
+            <code>
+import edu.wpi.first.wpilibj.PS4Controller;
+            </code></pre>
+        <p>Once again, just like the SparkMax motor controllers, we have to create the XboxController object in our Robot.java class and initialize it in the Robot constructor: </p>
+        <pre>
+            <code>
+package frc.robot;
+
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.PS4Controller;
+
+public class Robot extends TimedRobot {
+  private SparkMax motor;
+  private PS4Controller controller;
+
+  public Robot() {
+    motor = new SparkMax(0,MotorType.kBrushless);
+    controller = new PS4Controller(0); //0 is the port of the driver station
+                                        //that the controller is plugged into
+  }
+}
+            </code></pre>
+        <h2>Methods of PS4Controller</h2>
+        <p>The PS4Controller class works extremely similar to the XboxController class, with the main difference being the fact that PS4 controllers use shapes while Xbox controllers use letters. This changes the methods from <code>getAButton()</code>, for example, to <code>getCrossButton()</code></p>
+        <pre>
+        <code>
+  @Override
+  public void teleopPeriodic() {
+    if (controller.getCrossButton()) { //While button cross is pressed on the controller,
+      motor.set(0.8);              //the motor will spin at 80% speed
+    }
+    if (controller.getSquareButtonPressed()) { //When the button square is pressed,
+        motor.set(0.5);                   //the motor will spin at 50% speed
+    }
+    if (controller.getSquareButtonReleased()) { //When the button square is released,
+        motor.stopMotor();                 //the motor will stop spinning
+    }
+  }
+            </code></pre>
+        <p>The triggers and joysticks are measured as analog inputs rather than booleans. Therefore, you'd usually set them equal to some double value, like so: </p>
+        <pre>
+            <code>
+  @Override
+  public void teleopPeriodic() {
+    double leftY = controller.getLeftY(); //range of [-1,1]; back is positive
+    motor.set(leftY);
+    double leftTrigger = controller.getL2Axis(); //range of [0,1]
+    motor.set(leftTrigger);
+  }
+            </code></pre>
+    </div>
+</body>
+</html>
